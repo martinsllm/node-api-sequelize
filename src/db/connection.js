@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'src/db/database.sqlite'
+    storage: '../../src/db/database.sqlite'
 });
 
 try {
@@ -11,3 +11,5 @@ try {
 } catch (error) {
     console.error('Unable to connect to the database:', error);
 }
+
+module.exports = sequelize;
