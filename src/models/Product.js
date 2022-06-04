@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../db/connection');
+const Provider = require('./Provider');
 
 const Product = sequelize.define('Product', {
     name: {
@@ -17,14 +18,12 @@ const Product = sequelize.define('Product', {
     provider_id: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'provider',
+            model: Provider,
             key: 'id'
         }
     }
 }, {
     freezeTableName: true
-})
-
-Product.sync({ force: true });
+});
 
 module.exports = Product;
