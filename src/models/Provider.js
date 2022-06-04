@@ -14,7 +14,6 @@ const Provider = sequelize.define('Provider', {
     freezeTableName: true
 });
 
-
-Provider.sync({ force: true });
+//Provider.sync({force: true})
 
 module.exports = Provider;
