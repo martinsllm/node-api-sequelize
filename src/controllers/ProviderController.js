@@ -1,10 +1,10 @@
-const Provider = require('../models/Provider');
+const ProviderRepository = require('../repositories/ProviderRepository');
 
 module.exports = {
 
     async List(req, res) {
         try {
-            const data = await Provider.findAll();
+            const data = await ProviderRepository.List();
             return res.json(data);
         } catch (error) {
             return res.status(500).json({'MESSAGE': error});
@@ -13,7 +13,7 @@ module.exports = {
 
     async ListOne(req, res) {
         try {
-            const data = await Provider.findByPk(req.params.id);
+            const data = await ProviderRepository.ListOne(req.params.id);
 
             return (data) ? 
                 res.json(data) : 
@@ -25,11 +25,7 @@ module.exports = {
 
     async Create(req, res) {
         try {
-            await Provider.findOrCreate({
-                where: {
-                    ...req.body
-                }
-            });
+            await ProviderRepository.Create({...req.body});
             return res.status(201).json();
         } catch (error) {
             return res.status(500).json({'MESSAGE': error});
@@ -38,11 +34,10 @@ module.exports = {
 
     async Update(req, res) {
         try {
-            const data = await Provider.findByPk(req.params.id);
-
+            const data = await ProviderRepository.ListOne(req.params.id);
             if(!data ) res.status(404).json({'MESSAGE': 'Resultado não encontrado!'});
 
-            await data.update({...req.body});
+            await ProviderRepository.Update(data, req.body);
 
             return res.status(204).json();
         } catch (error) {
@@ -52,11 +47,10 @@ module.exports = {
 
     async Delete(req, res) {
         try {
-            const data = await Provider.findByPk(req.params.id);
-
+            const data = await ProviderRepository.ListOne(req.params.id);
             if(!data ) res.status(404).json({'MESSAGE': 'Resultado não encontrado!'});
 
-            await data.destroy();
+            await ProviderRepository.Delete(data);
 
             return res.status(204).json();
         } catch (error) {
